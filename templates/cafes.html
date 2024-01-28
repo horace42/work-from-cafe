@@ -1,0 +1,57 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block title %}Restaurants{% endblock %}
+
+{% block styles %}
+    {{super()}}
+    <link rel="stylesheet" href="{{url_for('.static', filename='css/styles.css')}}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+
+      <h1>All Cafes</h1>
+
+	  <table class="table">
+          <!-- This is where you will write the code to render a Bootstrap
+          Table that contains all the information from the
+          cafe-data.csv file. -->
+          <thead>
+            <tr>
+                {% for col_head in header %}
+                <th scope="col">{{ header[col_head] }}</th>
+                {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for c in cafes %}
+            <tr>
+                {% for col_head in header %}
+                    {% if col_head == "map_url" %}
+                        <td><a href="{{ c[col_head] }}">Maps Link</a></td>
+                    {% elif col_head == "img_url" %}
+                        <td><a href="{{ c[col_head] }}"><img src="{{ c[col_head] }}" width="150"></a></td>
+                    {% else %}
+                        <td>{{ c[col_head] }}</td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+  	  </table>
+
+      <p>
+          <a class="btn btn-warning btn-lg" href="." role="button">Homepage</a>
+          <a class="btn btn-warning btn-lg" href="cafes" role="button">See all cafes</a>
+          <a class="btn btn-warning btn-lg" href="add" role="button">Add cafe</a>
+          <a class="btn btn-warning btn-lg" href="delete" role="button">Delete cafe</a>
+      </p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
